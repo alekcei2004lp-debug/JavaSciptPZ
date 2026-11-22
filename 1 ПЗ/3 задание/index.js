@@ -8,27 +8,46 @@ const products = [
     "Макароны"
 ];
 
-const productList = document.getElementById("product-list");
-const addProductButton = document.getElementById("add-product");
-function renderProducts() {
+const productList = document.querySelector(".product-list");
+const addProductButton = document.querySelector(".add-product");
+
+function sortProducts() {
     products.sort((a, b) => a.localeCompare(b, "ru"));
-    productList.innerHTML = "";
-    products.forEach((product, index) => {
-        const item = document.createElement("li");
-        item.textContent = `${index + 1}) ${product}`;
-        productList.appendChild(item);
-    });
 }
 
+function createProductItem(name) {
+    const item = document.createElement("li");
+    item.classList.add("product-item");
+    item.textContent = name;
+    return item;
+}
+
+sortProducts();
+
+products.forEach((name) => {
+    productList.appendChild(createProductItem(name));
+});
+
 addProductButton.addEventListener("click", () => {
-    const name = prompt("Введите название товара:");
-    if (name === null || name.trim() === "") {
+    const input = prompt("Введите название товара:");
+    const name = input === null ? "" : input.trim();
+    if (name === "") {
         alert("Название товара не введено!");
         return;
     }
 
-    products.push(name.trim());
-    renderProducts();
-});
+    products.push(name);
+    sortProducts();
 
-renderProducts();
+    const index = products.indexOf(name);
+    const nextItem = productList.querySelector(
+        `.product-item:nth-child(${index + 1})`
+    );
+
+    const item = createProductItem(name);
+    if (nextItem === null) {
+        productList.appendChild(item);
+    } else {
+        productList.insertBefore(item, nextItem);
+    }
+});

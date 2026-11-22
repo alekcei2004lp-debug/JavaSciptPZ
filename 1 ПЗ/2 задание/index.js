@@ -1,50 +1,59 @@
 const heights = [164, 157, 160, 143, 170];
-const heightList = document.getElementById("height-list");
-const addHeightButton = document.getElementById("add-height");
-const filterButton = document.getElementById("filter-heights");
-function renderHeights(list = heights) {
-    heightList.innerHTML = "";
-    list.forEach((height, index) => {
-        const item = document.createElement("li");
-        item.textContent = `${index + 1}) ${height}`;
-        heightList.appendChild(item);
-    });
+const heightList = document.querySelector(".height-list");
+const addHeightButton = document.querySelector(".add-height");
+const filterButton = document.querySelector(".filter-heights");
+let minHeight = null;
+let visibleCount = 0;
+function appendHeight(height) {
+    const item = document.createElement("li");
+    visibleCount++;
+    item.textContent = `${visibleCount}) ${height}`;
+    heightList.appendChild(item);
+}
+
+function renderHeights(list) {
+    heightList.replaceChildren();
+    visibleCount = 0;
+    list.forEach(appendHeight);
 }
 
 addHeightButton.addEventListener("click", () => {
     const input = prompt("Введите рост ученика:");
-    if (input === null || input.trim() === "") {
+    const value = input === null ? "" : input.trim();
+    if (value === "") {
         alert("Рост не введён!");
         return;
     }
 
-    const height = Number(input);
-    if (!Number.isFinite(height) || height <= 0) {
+    const height = +value;
+    if (isNaN(height) || !isFinite(height) || height <= 0) {
         alert("Введите корректный рост!");
         return;
     }
 
     heights.push(height);
-    renderHeights();
+    if (minHeight === null || height >= minHeight) {
+        appendHeight(height);
+    }
 });
 
 filterButton.addEventListener("click", () => {
     const input = prompt("Введите минимальный рост:");
-    if (input === null || input.trim() === "") {
-        renderHeights();
+    const value = input === null ? "" : input.trim();
+    if (value === "") {
+        minHeight = null;
+        renderHeights(heights);
         return;
     }
 
-    const minHeight = Number(input);
-    if (!Number.isFinite(minHeight) || minHeight < 0) {
+    const threshold = +value;
+    if (isNaN(threshold) || !isFinite(threshold) || threshold < 0) {
         alert("Введите корректное число!");
         return;
     }
 
-    const filteredHeights = heights.filter(
-        (height) => height >= minHeight
-    );
-    renderHeights(filteredHeights);
+    minHeight = threshold;
+    renderHeights(heights.filter((height) => height >= minHeight));
 });
 
-renderHeights();
+renderHeights(heights);

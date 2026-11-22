@@ -14,7 +14,7 @@ body {
     min-height: 100vh;
     margin: 0 auto;
     padding: 15px;
-    background-color: white;
+    background-color: #fff;
 }
 
 h1 {
@@ -30,31 +30,30 @@ h1 {
 
 button {
     padding: 9px 12px;
-    border: 0;
+    border: none;
     border-radius: 4px;
     background-color: #419b52;
-    color: white;
+    color: #fff;
     cursor: pointer;
 }
 
-#search-book {
+.search-book {
     background-color: #4056a3;
 }
 
-ul {
+.book-list {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-li {
+.book-item {
     padding: 4px 0;
     font-size: 14px;
 }
 
-li.found {
+.book-item.found {
     padding-left: 5px;
     border-radius: 3px;
     background-color: #fff2a8;
 }
-  
