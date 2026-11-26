@@ -4,32 +4,28 @@ const priceList = document.querySelector('.price-list');
 const ascBtn = document.querySelector('.asc-btn');
 const descBtn = document.querySelector('.desc-btn');
 
-function renderList() {
+const renderList = () => {
   priceList.innerHTML = '';
 
-  prices.forEach(function (price) {
+  prices.forEach((price) => {
     const item = document.createElement('li');
     item.textContent = price;
     priceList.appendChild(item);
   });
-}
+};
 
 renderList();
 
-ascBtn.addEventListener('click', function () {
+ascBtn.addEventListener('click', () => {
   const sorted = prices.slice();
-  sorted.sort(function (a, b) {
-    return a - b;
-  });
+  sorted.sort((a, b) => a - b);
   prices = sorted;
   renderList();
 });
 
-descBtn.addEventListener('click', function () {
+descBtn.addEventListener('click', () => {
   const sorted = prices.slice();
-  sorted.sort(function (a, b) {
-    return b - a;
-  });
+  sorted.sort((a, b) => b - a);
   prices = sorted;
   renderList();
 });

@@ -1,8 +1,10 @@
-const thumbs = document.querySelectorAll('.thumb');
+const thumbs = document.querySelector('.thumbs');
 const mainImage = document.querySelector('.main-image');
 
-thumbs.forEach(function (thumb) {
-  thumb.addEventListener('click', function () {
+thumbs.addEventListener('click', (event) => {
+  const thumb = event.target.closest('.thumb');
+
+  if (thumb) {
     mainImage.src = thumb.src;
-  });
+  }
 });
